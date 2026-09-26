@@ -5,7 +5,6 @@
   'use strict';
 
   const D = window.BLOOM_DATA;
-  const Art = window.Art;
 
   /* ------------------------------ Утилиты ------------------------------ */
   const $ = (s, el = document) => el.querySelector(s);
@@ -33,15 +32,31 @@
   const byId = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
   const catLabel = Object.fromEntries(D.CATEGORIES.map((c) => [c.id, c.label]));
 
-  // Кэш SVG, чтобы не генерировать одну и ту же иллюстрацию повторно
-  const artCache = new Map();
-  function media(p) {
-    if (p.image) return `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">`;
-    if (!artCache.has(p.id)) artCache.set(p.id, Art.bouquet(Object.assign({ label: `Букет ${p.name}` }, p.art)));
-    return artCache.get(p.id);
+  /**
+   * Фото с плавным появлением. Если файла ещё нет — показывается аккуратный
+   * плейсхолдер с названием и путём к файлу, который нужно добавить.
+   * fallback — запасной путь (например, общее фото цветка вместо фото конкретного оттенка).
+   */
+  function photo(src, { alt = '', tint = '', label = '', fallback = '', eager = false } = {}) {
+    const fb = fallback ? ` data-fallback="${esc(fallback)}"` : '';
+    return `<div class="ph"${tint ? ` style="--tint:${tint}"` : ''}>` +
+      `<img src="${esc(src)}" alt="${esc(alt)}"${fb} ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" onload="bloomImgLoad(this)" onerror="bloomImgError(this)">` +
+      `<div class="ph__fallback" aria-hidden="true">${icon('camera')}<span class="ph__name">${esc(label || alt)}</span><span class="ph__file">${esc(fallback || src)}</span></div>` +
+      '</div>';
   }
+  window.bloomImgLoad = (img) => img.parentNode.classList.add('is-loaded');
+  window.bloomImgError = (img) => {
+    const fb = img.getAttribute('data-fallback');
+    if (fb) { img.removeAttribute('data-fallback'); img.src = fb; return; }
+    img.parentNode.classList.add('is-missing');
+  };
+
+  const media = (p) => photo(p.image, { alt: `Букет «${p.name}» — ${p.short.toLowerCase()}`, tint: p.tint, label: p.name });
   function itemMedia(item) {
-    if (item.type === 'custom') return Art.bouquet(Object.assign({ label: item.name }, item.art));
+    if (item.type === 'custom') {
+      const src = item.image || D.PHOTOS.builder('rose', 'pink');
+      return photo(src.src || src, { alt: item.name, tint: '#efe6da', label: item.name, fallback: src.fallback });
+    }
     return media(byId[item.id]);
   }
 
@@ -243,15 +258,15 @@
 
   /* ------------------------------ Поводы ------------------------------ */
   const OCCASION_CARDS = [
-    { id: 'love', title: 'Для любимой', text: 'Розы, пионы и нежные композиции.', art: { seed: 'oc-love', flowers: [{ t: 'rose', c: 'pink', n: 5 }, { t: 'peony', c: 'blush', n: 3 }], greens: ['euc', 'leaf'], holder: 'wrap', wrap: 'white', bg: '#efd9d3' } },
-    { id: 'birthday', title: 'День рождения', text: 'Яркие букеты для особенного дня.', art: { seed: 'oc-bd', flowers: [{ t: 'chrysanthemum', c: ['peach', 'yellow'], n: 4 }, { t: 'tulip', c: 'coral', n: 3 }, { t: 'daisy', c: 'white', n: 3 }], greens: ['leaf', 'fern'], holder: 'wrap', wrap: 'kraft', bg: '#f1e2cc' } },
-    { id: 'date', title: 'Свидание', text: 'Нежные композиции для романтического вечера.', art: { seed: 'oc-date', flowers: [{ t: 'rose', c: 'red', n: 6 }, { t: 'eustoma', c: 'white', n: 3 }], greens: ['leaf', 'euc'], holder: 'wrap', wrap: 'black', bg: '#eadad4' } },
-    { id: 'just', title: 'Просто так', text: 'Потому что повод не всегда нужен.', art: { seed: 'oc-just', flowers: [{ t: 'tulip', c: ['white', 'peach'], n: 5 }, { t: 'daisy', c: 'white', n: 3 }], greens: ['leaf', 'gyps'], holder: 'vase', bg: '#e3e7da' } }
+    { id: 'love', title: 'Для любимой', text: 'Розы, пионы и нежные композиции.' },
+    { id: 'birthday', title: 'День рождения', text: 'Яркие букеты для особенного дня.' },
+    { id: 'date', title: 'Свидание', text: 'Нежные композиции для романтического вечера.' },
+    { id: 'just', title: 'Просто так', text: 'Потому что повод не всегда нужен.' }
   ];
   function renderOccasions() {
     $('#occasionsGrid').innerHTML = OCCASION_CARDS.map((o, i) => `
       <button class="occasion reveal" type="button" data-occasion="${o.id}">
-        <div class="occasion__img">${Art.bouquet(Object.assign({ label: o.title }, o.art))}</div>
+        <div class="occasion__img">${photo(D.PHOTOS.occasions[o.id], { alt: `Букет на повод «${o.title}»`, tint: '#e9dfd4', label: o.title })}</div>
         <div class="occasion__body">
           <span class="occasion__num">0${i + 1}</span>
           <h3>${o.title}</h3>
@@ -606,24 +621,21 @@
     const extras = B.extras.filter((x) => fd.getAll('extra').includes(x.id));
     const price = B.base + flower.price * size.stems + wrap.price + extras.reduce((s, x) => s + x.price, 0);
     const has = (id) => extras.some((x) => x.id === id);
-    const heads = flower.t === 'peony' ? Math.round(size.heads * 0.7) : size.heads;
-    const art = {
-      seed: `builder-${flower.id}-${size.id}`,
-      flowers: [{ t: flower.t, c: color.pal, n: heads, s: flower.t === 'peony' ? 0.85 : 1 }],
-      greens: ['euc', 'leaf'],
-      holder: has('vase') ? 'vase' : 'wrap',
-      wrap: wrap.id,
-      ribbon: has('ribbon') ? (wrap.id === 'black' ? '#c9b27c' : '#b89a5e') : false,
-      card: has('card'), candy: has('candy'),
-      bg: '#efe6da', spread: size.spread
-    };
-    return { flower, color, size, wrap, extras, price, art };
+    const image = D.PHOTOS.builder(flower.id, color.id);
+    return { flower, color, size, wrap, extras, price, image };
   }
 
   let lastBuilderPrice = null;
+  let lastBuilderSrc = null;
   function renderBuilder() {
     const c = builderConfig();
-    $('#builderArt').innerHTML = Art.bouquet(Object.assign({ label: 'Ваш букет' }, c.art));
+    // Фото меняем только при смене цветка или оттенка, чтобы не мигало
+    if (lastBuilderSrc !== c.image.src) {
+      lastBuilderSrc = c.image.src;
+      $('#builderArt').innerHTML = photo(c.image.src, { alt: `Пример букета: ${c.flower.label.toLowerCase()}, ${COLOR_ADJ[c.color.id]}`, tint: '#efe6da', label: c.flower.label, fallback: c.image.fallback, eager: true });
+    }
+    $('#builderTags').innerHTML = [c.color.label, c.size.label, c.wrap.label + ' упаковка', ...c.extras.map((x) => x.label)]
+      .map((t) => `<span>${esc(t)}</span>`).join('');
     const priceEl = $('#builderPrice');
     priceEl.textContent = fmt(c.price);
     if (lastBuilderPrice !== null && lastBuilderPrice !== c.price) bump(priceEl, 'is-changed');
@@ -638,7 +650,7 @@
     const key = 'custom:' + [c.flower.id, c.color.id, c.size.id, c.wrap.id, ...c.extras.map((x) => x.id)].join('-');
     const extras = c.extras.length ? ' · ' + c.extras.map((x) => x.label.toLowerCase()).join(', ') : '';
     addToCart({
-      type: 'custom', key, name: 'Авторский букет', price: c.price, art: c.art,
+      type: 'custom', key, name: 'Авторский букет', price: c.price, image: c.image,
       sizeLabel: c.size.label,
       meta: `${c.size.stems} ${plural(c.size.stems, FLOWER_FORMS[c.flower.id])}, ${COLOR_ADJ[c.color.id]} · ${c.wrap.label.toLowerCase()} упаковка${extras}`
     }, 1, e.submitter || $('button[type=submit]', bForm));
@@ -923,15 +935,11 @@
   $('#nlEmail').addEventListener('input', () => $('#newsletterForm').classList.remove('is-invalid'));
 
   /* ------------------------------ Иллюстрации ------------------------------ */
-  $('#heroArt').innerHTML = Art.bouquet({
-    label: 'Букет из пионов и роз в керамической вазе', seed: 'hero-7',
-    flowers: [{ t: 'peony', c: 'blush', n: 4 }, { t: 'rose', c: 'pink', n: 3 }, { t: 'eustoma', c: 'white', n: 3 }, { t: 'rose', c: 'cream', n: 2 }, { t: 'bud', c: 'blush', n: 2 }],
-    greens: ['euc', 'leaf', 'gyps', 'euc'], holder: 'ceramic', vaseColor: '#f6f0e8', bg: '#efe2d9', accent: 'rgba(255,255,255,0.5)', spread: 1.08
-  });
+  $('#heroArt').innerHTML = photo(D.PHOTOS.hero, { alt: 'Пышный букет из пионов и роз в керамической вазе', tint: '#efe2d9', label: 'Главное фото', eager: true });
   $('.hero__tag span:last-child').textContent = `от ${fmt(byId['peony-dream'].sizes.S)}`;
   $('.hero__tag').addEventListener('click', () => openProduct('peony-dream'));
-  $('#aboutArt').innerHTML = Art.workshop();
-  $('#mapArt').innerHTML = Art.cityMap();
+  $('#aboutArt').innerHTML = photo(D.PHOTOS.about, { alt: 'Флорист собирает букет в мастерской BLOOM', tint: '#efe6da', label: 'Мастерская BLOOM' });
+  $('#mapArt').innerHTML = window.BloomMap.cityMap();
 
   /* ------------------------------ Появление и счётчики ------------------------------ */
   function animateCount(el) {

@@ -1,7 +1,7 @@
 /* ==========================================================================
    BLOOM — данные магазина
-   Чтобы заменить иллюстрацию на фото, добавьте товару поле
-   image: 'images/blush.jpg' — карточки и корзина подхватят его автоматически.
+   Фотографии товаров лежат в images/products/<id>.jpg (см. images/README.md).
+   Поле image можно заменить любым путём или прямой ссылкой на фото.
    ========================================================================== */
 (function (global) {
   'use strict';
@@ -41,6 +41,19 @@
     L: { label: 'L', name: 'Большой', height: 'около 55–60 см' }
   };
 
+  // Фотографии для остальных блоков сайта
+  const PHOTOS = {
+    hero: 'images/hero.jpg',
+    about: 'images/about-florist.jpg',
+    occasions: {
+      love: 'images/occasions/love.jpg',
+      birthday: 'images/occasions/birthday.jpg',
+      date: 'images/occasions/date.jpg',
+      just: 'images/occasions/just.jpg'
+    },
+    builder: (flower, color) => ({ src: `images/builder/${flower}-${color}.jpg`, fallback: `images/builder/${flower}.jpg` })
+  };
+
   const PRODUCTS = [
     {
       id: 'blush', name: 'Blush', category: 'roses', occasions: ['love', 'date'],
@@ -49,7 +62,7 @@
       composition: ['розовые розы — 15 шт.', 'эвкалипт', 'декоративная зелень', 'упаковка'],
       keywords: 'роза розы эвкалипт розовый нежный',
       price: 12900, popularity: 98, added: 20260310, badge: 'Хит', stock: 'in',
-      art: { seed: 'blush', flowers: [{ t: 'rose', c: 'pink', n: 7 }, { t: 'rose', c: 'blush', n: 3 }], greens: ['euc', 'leaf', 'euc'], holder: 'wrap', wrap: 'white', bg: '#f4e6e1' }
+      image: 'images/products/blush.jpg', tint: '#f4e6e1'
     },
     {
       id: 'romance', name: 'Romance', category: 'roses', occasions: ['love', 'date'],
@@ -58,7 +71,7 @@
       composition: ['красные розы — 21 шт.', 'салал', 'матовая упаковка', 'атласная лента'],
       keywords: 'роза розы красный классика любовь',
       price: 18500, popularity: 95, added: 20251120, badge: 'Хит', stock: 'in',
-      art: { seed: 'romance', flowers: [{ t: 'rose', c: 'red', n: 12 }], greens: ['leaf'], holder: 'wrap', wrap: 'black', bg: '#efe4dc' }
+      image: 'images/products/romance.jpg', tint: '#efe4dc'
     },
     {
       id: 'peony-dream', name: 'Peony Dream', category: 'peonies', occasions: ['love', 'birthday'],
@@ -67,7 +80,7 @@
       composition: ['пионы — 9 шт.', 'сезонная зелень', 'эвкалипт', 'крафтовая упаковка'],
       keywords: 'пион пионы сезонный пышный',
       price: 22900, popularity: 97, added: 20260520, badge: 'Новинка', stock: 'in',
-      art: { seed: 'peony', flowers: [{ t: 'peony', c: 'blush', n: 6 }, { t: 'bud', c: 'blush', n: 3 }], greens: ['leaf', 'euc'], holder: 'wrap', wrap: 'kraft', bg: '#f2e9e0' }
+      image: 'images/products/peony-dream.jpg', tint: '#f2e9e0'
     },
     {
       id: 'morning', name: 'Morning', category: 'author', occasions: ['birthday', 'just'],
@@ -76,7 +89,7 @@
       composition: ['белые розы — 9 шт.', 'альстромерии — 5 шт.', 'гипсофила', 'декоративная зелень'],
       keywords: 'роза розы белый альстромерия утро',
       price: 14500, popularity: 90, added: 20260115, badge: '', stock: 'in',
-      art: { seed: 'morning', flowers: [{ t: 'rose', c: 'white', n: 5 }, { t: 'alstroemeria', c: 'cream', n: 4 }], greens: ['leaf', 'gyps'], holder: 'vase', bg: '#e6e4d8', accent: 'rgba(255,255,255,0.45)' }
+      image: 'images/products/morning.jpg', tint: '#e6e4d8'
     },
     {
       id: 'wild-garden', name: 'Wild Garden', category: 'wild', occasions: ['just', 'birthday'],
@@ -85,7 +98,7 @@
       composition: ['ромашки — 7 шт.', 'кустовые хризантемы', 'тюльпаны', 'папоротник', 'крафт'],
       keywords: 'полевые ромашки хризантемы луг лето',
       price: 11900, popularity: 88, added: 20260601, badge: 'Новинка', stock: 'in',
-      art: { seed: 'wild', flowers: [{ t: 'daisy', c: 'white', n: 7 }, { t: 'chrysanthemum', c: 'lilac', n: 3 }, { t: 'tulip', c: 'yellow', n: 2 }], greens: ['fern', 'leaf'], holder: 'wrap', wrap: 'kraft', bg: '#e9ecdf' }
+      image: 'images/products/wild-garden.jpg', tint: '#e9ecdf'
     },
     {
       id: 'velvet', name: 'Velvet', category: 'roses', occasions: ['love', 'date'],
@@ -94,7 +107,7 @@
       composition: ['бордовые розы — 17 шт.', 'декоративная зелень', 'эвкалипт', 'упаковка'],
       keywords: 'роза розы бордовый бархат вечер',
       price: 19900, popularity: 93, added: 20260212, badge: '', stock: 'in',
-      art: { seed: 'velvet', flowers: [{ t: 'rose', c: 'burgundy', n: 9 }, { t: 'bud', c: 'burgundy', n: 2 }], greens: ['euc', 'leaf'], holder: 'wrap', wrap: 'pink', bg: '#efe2dc' }
+      image: 'images/products/velvet.jpg', tint: '#efe2dc'
     },
     {
       id: 'spring-kiss', name: 'Spring Kiss', category: 'tulips', occasions: ['just', 'birthday'],
@@ -103,7 +116,7 @@
       composition: ['тюльпаны — 15 шт.', 'листья тюльпана', 'упаковка цвета шалфея'],
       keywords: 'тюльпан тюльпаны весна персиковый белый',
       price: 9500, popularity: 84, added: 20260402, badge: '', stock: 'in',
-      art: { seed: 'spring', flowers: [{ t: 'tulip', c: ['peach', 'white'], n: 9 }], greens: ['leaf'], holder: 'wrap', wrap: 'sage', bg: '#f3ece2' }
+      image: 'images/products/spring-kiss.jpg', tint: '#f3ece2'
     },
     {
       id: 'sunny', name: 'Sunny', category: 'tulips', occasions: ['birthday', 'just'],
@@ -112,7 +125,7 @@
       composition: ['жёлтые тюльпаны — 11 шт.', 'хризантемы', 'зелень', 'крафт'],
       keywords: 'тюльпан тюльпаны жёлтый солнце хризантемы',
       price: 8900, popularity: 80, added: 20251005, badge: '', stock: 'in',
-      art: { seed: 'sunny', flowers: [{ t: 'tulip', c: 'yellow', n: 6 }, { t: 'chrysanthemum', c: 'cream', n: 3 }], greens: ['leaf', 'fern'], holder: 'wrap', wrap: 'kraft', bg: '#f4ecd9' }
+      image: 'images/products/sunny.jpg', tint: '#f4ecd9'
     },
     {
       id: 'cloud', name: 'Cloud', category: 'peonies', occasions: ['love'],
@@ -121,7 +134,7 @@
       composition: ['белые пионы — 11 шт.', 'гипсофила', 'эвкалипт', 'белая упаковка'],
       keywords: 'пион пионы белый облако гипсофила',
       price: 24900, popularity: 86, added: 20260605, badge: 'Новинка', stock: 'order',
-      art: { seed: 'cloud', flowers: [{ t: 'peony', c: 'white', n: 6 }, { t: 'bud', c: 'white', n: 2 }], greens: ['gyps', 'euc', 'leaf'], holder: 'wrap', wrap: 'white', bg: '#ebe7e0' }
+      image: 'images/products/cloud.jpg', tint: '#ebe7e0'
     },
     {
       id: 'lavender-mood', name: 'Lavender Mood', category: 'author', occasions: ['date', 'just'],
@@ -130,7 +143,7 @@
       composition: ['эустомы — 7 шт.', 'альстромерии — 5 шт.', 'эвкалипт', 'упаковка'],
       keywords: 'эустома лиловый сиреневый альстромерия авторский',
       price: 16500, popularity: 82, added: 20260420, badge: '', stock: 'in',
-      art: { seed: 'lavender', flowers: [{ t: 'eustoma', c: 'lilac', n: 6 }, { t: 'alstroemeria', c: 'white', n: 3 }], greens: ['euc', 'leaf'], holder: 'wrap', wrap: 'white', bg: '#ece6ec' }
+      image: 'images/products/lavender-mood.jpg', tint: '#ece6ec'
     },
     {
       id: 'aurora', name: 'Aurora', category: 'compositions', occasions: ['birthday', 'love'],
@@ -139,7 +152,7 @@
       composition: ['персиковые розы — 7 шт.', 'эустомы — 5 шт.', 'пионы — 3 шт.', 'керамическая ваза'],
       keywords: 'композиция ваза роза розы персиковый эустома пион',
       price: 27500, popularity: 85, added: 20260615, badge: 'Новинка', stock: 'order',
-      art: { seed: 'aurora', flowers: [{ t: 'rose', c: 'peach', n: 4 }, { t: 'eustoma', c: 'white', n: 3 }, { t: 'peony', c: 'blush', n: 2 }], greens: ['euc', 'leaf'], holder: 'ceramic', vaseColor: '#f4eee6', bg: '#eadfd2' }
+      image: 'images/products/aurora.jpg', tint: '#eadfd2'
     },
     {
       id: 'meadow-box', name: 'Meadow Box', category: 'compositions', occasions: ['just', 'birthday'],
@@ -148,7 +161,7 @@
       composition: ['ромашки', 'эустомы', 'хризантемы', 'гипсофила', 'шляпная коробка'],
       keywords: 'коробка полевые ромашки эустома композиция',
       price: 15500, popularity: 79, added: 20251201, badge: '', stock: 'in',
-      art: { seed: 'meadow', flowers: [{ t: 'daisy', c: 'white', n: 5 }, { t: 'eustoma', c: 'lilac', n: 3 }, { t: 'chrysanthemum', c: 'yellow', n: 2 }], greens: ['euc', 'gyps'], holder: 'box', bg: '#f1ebe3' }
+      image: 'images/products/meadow-box.jpg', tint: '#f1ebe3'
     },
     {
       id: 'confetti', name: 'Confetti', category: 'author', occasions: ['birthday'],
@@ -157,7 +170,7 @@
       composition: ['кустовые хризантемы — 7 веток', 'альстромерии', 'зелень', 'крафт'],
       keywords: 'хризантемы разноцветный яркий праздник',
       price: 9900, popularity: 76, added: 20250910, badge: '', stock: 'in',
-      art: { seed: 'confetti', flowers: [{ t: 'chrysanthemum', c: ['peach', 'lilac', 'yellow', 'blush'], n: 8 }, { t: 'alstroemeria', c: 'coral', n: 2 }], greens: ['leaf'], holder: 'wrap', wrap: 'kraft', bg: '#f2e8dc' }
+      image: 'images/products/confetti.jpg', tint: '#f2e8dc'
     },
     {
       id: 'pure', name: 'Pure', category: 'tulips', occasions: ['date', 'just'],
@@ -166,7 +179,7 @@
       composition: ['белые тюльпаны — 25 шт.', 'белая упаковка', 'лента'],
       keywords: 'тюльпан тюльпаны белый минимализм',
       price: 13500, popularity: 81, added: 20260301, badge: '', stock: 'in',
-      art: { seed: 'pure', flowers: [{ t: 'tulip', c: 'white', n: 11 }], greens: ['leaf'], holder: 'wrap', wrap: 'white', bg: '#e8e6df' }
+      image: 'images/products/pure.jpg', tint: '#e8e6df'
     },
     {
       id: 'grand-amour', name: 'Grand Amour', category: 'roses', occasions: ['love'],
@@ -175,7 +188,7 @@
       composition: ['красные розы — 51 шт.', 'дизайнерская упаковка', 'атласная лента'],
       keywords: 'роза розы красный большой 51',
       price: 45900, popularity: 89, added: 20251020, badge: 'Хит', stock: 'order',
-      art: { seed: 'grand', flowers: [{ t: 'rose', c: 'red', n: 22, s: 0.85 }], greens: ['leaf'], holder: 'wrap', wrap: 'black', bg: '#ede3dc', spread: 1.12, ribbon: '#c9b27c' }
+      image: 'images/products/grand-amour.jpg', tint: '#ede3dc'
     }
   ];
   PRODUCTS.forEach((p) => { p.sizes = sizes(p.price); });
@@ -183,15 +196,17 @@
   const POPULAR_IDS = ['blush', 'romance', 'peony-dream', 'morning', 'wild-garden', 'velvet'];
 
   // Конструктор букета
+  // Фото для превью конструктора: images/builder/<цветок>.jpg,
+  // при желании — отдельные фото по оттенку: images/builder/<цветок>-<цвет>.jpg
   const BUILDER = {
     base: 1500,
     flowers: [
-      { id: 'rose', label: 'Розы', price: 700, t: 'rose' },
-      { id: 'peony', label: 'Пионы', price: 1400, t: 'peony' },
-      { id: 'tulip', label: 'Тюльпаны', price: 500, t: 'tulip' },
-      { id: 'eustoma', label: 'Эустомы', price: 800, t: 'eustoma' },
-      { id: 'chrys', label: 'Хризантемы', price: 450, t: 'chrysanthemum' },
-      { id: 'alstro', label: 'Альстромерии', price: 550, t: 'alstroemeria' }
+      { id: 'rose', label: 'Розы', price: 700 },
+      { id: 'peony', label: 'Пионы', price: 1400 },
+      { id: 'tulip', label: 'Тюльпаны', price: 500 },
+      { id: 'eustoma', label: 'Эустомы', price: 800 },
+      { id: 'chrys', label: 'Хризантемы', price: 450 },
+      { id: 'alstro', label: 'Альстромерии', price: 550 }
     ],
     colors: [
       { id: 'white', label: 'Белый', swatch: '#f4ede3', pal: ['white'] },
@@ -243,5 +258,5 @@
     faq: null
   };
 
-  global.BLOOM_DATA = { CATEGORIES, OCCASIONS, PRICE_RANGES, SIZE_INFO, PRODUCTS, POPULAR_IDS, BUILDER, REVIEWS, FAQ, INFO };
+  global.BLOOM_DATA = { CATEGORIES, OCCASIONS, PRICE_RANGES, SIZE_INFO, PRODUCTS, PHOTOS, POPULAR_IDS, BUILDER, REVIEWS, FAQ, INFO };
 })(window);
