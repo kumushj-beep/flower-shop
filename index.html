@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BLOOM — цветы, которые говорят за вас</title>
+  <meta name="description" content="BLOOM — премиальный цветочный магазин в Актобе. Авторские букеты из свежих цветов, конструктор букета и доставка в день заказа.">
+  <meta name="theme-color" content="#faf6f0">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23faf6f0'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-size='20' fill='%232b2a29'%3EB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ============ Иконки ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-heart-fill" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.5 8.5h13l-1 11.5h-11z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-flower" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="9" r="2"/><path d="M12 7c0-3 3-4 3-1.5S13.5 8 12 7zM12 7c0-3-3-4-3-1.5S10.5 8 12 7zM14 9c3 0 4 3 1.5 3S13 10.5 14 9zM10 9c-3 0-4 3-1.5 3S11 10.5 10 9z"/><path d="M12 11v9M12 17c-2-2-4-2-5-1M12 15c2-2 4-2 5-1" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M3 6.5h11v9H3zM14 9.5h3.5l3 3v3H14z"/><circle cx="7" cy="17" r="1.8" fill="var(--cream)"/><circle cx="17" cy="17" r="1.8" fill="var(--cream)"/></g></symbol>
+  <symbol id="i-care" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12.5s-4-2.4-4-5.3a2.2 2.2 0 0 1 4-1.3 2.2 2.2 0 0 1 4 1.3c0 2.9-4 5.3-4 5.3z"/><path d="M3 15h3l3 2h4a1.5 1.5 0 0 1 0 3H9M13 18.5l5-2.5a1.5 1.5 0 0 1 2 2l-6 3.5H3"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M4 9h16v3H4zM5.5 12h13v8h-13zM12 9v11"/><path d="M12 9c-1-3-5-4-5-1.5S10 9 12 9zM12 9c1-3 5-4 5-1.5S14 9 12 9z"/></g></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 4h3l1.5 4-2 1.2a10 10 0 0 0 5.8 5.8L16 13l4 1.5v3A2 2 0 0 1 18 19.5 15 15 0 0 1 4.5 6 2 2 0 0 1 6.5 4z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mask" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M3 8c3-1.5 6-1.5 9 0 3-1.5 6-1.5 9 0 0 5-2.5 8-5 8-2 0-3-2-4-2s-2 2-4 2c-2.5 0-5-3-5-8z"/><path d="M6.5 11c1-.8 2.2-.8 3 0M14.5 11c1-.8 2.2-.8 3 0" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="16.8" cy="7.2" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M20.5 4.5L3.5 11l5.5 2 2 6 3-4 4.5 3.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 13l8-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M4.5 19.5l1.2-3.8A8 8 0 1 1 8.6 18.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.2 8.5c.3-.6.9-.6 1.1 0l.6 1.4c.1.3 0 .6-.3.9l-.4.4c.6 1.2 1.5 2.1 2.7 2.7l.4-.4c.3-.3.6-.4.9-.3l1.4.6c.6.2.6.8 0 1.1-1.2.9-2.5.7-4.2-.6-1.5-1.1-2.5-2.5-2.8-3.8-.1-.8.2-1.5.6-2z" fill="currentColor"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3c.6 4.5 2.5 6.4 7 7-4.5.6-6.4 2.5-7 7-.6-4.5-2.5-6.4-7-7 4.5-.6 6.4-2.5 7-7z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#home" class="logo" aria-label="BLOOM — на главную">BLOOM</a>
+    <nav class="nav" aria-label="Основное меню">
+      <a href="#home" class="nav__link is-active">Главная</a>
+      <a href="#catalog" class="nav__link">Каталог</a>
+      <a href="#about" class="nav__link">О нас</a>
+      <a href="#delivery" class="nav__link">Доставка</a>
+      <a href="#reviews" class="nav__link">Отзывы</a>
+      <a href="#contacts" class="nav__link">Контакты</a>
+    </nav>
+    <div class="header__actions">
+      <button class="icon-btn" type="button" data-open="search" aria-label="Поиск"><svg><use href="#i-search"/></svg></button>
+      <button class="icon-btn" type="button" data-open="favorites" aria-label="Избранное"><svg><use href="#i-heart"/></svg><span class="counter" id="favCount" hidden>0</span></button>
+      <button class="icon-btn" type="button" data-open="cart" aria-label="Корзина" id="cartBtn"><svg><use href="#i-bag"/></svg><span class="counter" id="cartCount" hidden>0</span></button>
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu" id="burger"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav class="mobile-menu__nav" aria-label="Мобильное меню">
+    <a href="#home">Главная</a>
+    <a href="#catalog">Каталог</a>
+    <a href="#builder">Свой букет</a>
+    <a href="#about">О нас</a>
+    <a href="#delivery">Доставка</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#contacts">Контакты</a>
+  </nav>
+  <div class="mobile-menu__foot">
+    <a href="tel:+77001234567">+7 (700) 123-45-67</a>
+    <span>Ежедневно 09:00–21:00</span>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <p class="eyebrow reveal">Flowers &amp; Emotions</p>
+      <h1 class="hero__title reveal">Подарите эмоции, <em>которые не&nbsp;завянут</em></h1>
+      <p class="hero__text reveal">Собираем букеты вручную из свежих цветов и доставляем их в тот день, когда они особенно нужны.</p>
+      <div class="hero__buttons reveal">
+        <a href="#catalog" class="btn btn--primary">Выбрать букет</a>
+        <a href="#builder" class="btn btn--ghost">Создать свой букет</a>
+      </div>
+      <div class="hero__meta reveal">
+        <div class="hero__rating"><span class="stars">★★★★★</span> 4.9 · 2 300+ отзывов</div>
+        <div class="hero__rating">Доставка сегодня до 21:00</div>
+      </div>
+    </div>
+    <div class="hero__visual reveal">
+      <div class="hero__image" id="heroArt"></div>
+      <button class="hero__tag" type="button" aria-label="Букет недели Peony Dream — подробнее">
+        <span class="hero__tag-label">Букет недели</span>
+        <strong>Peony Dream</strong>
+        <span>от 17 900 ₸</span>
+      </button>
+      <svg class="hero__deco hero__deco--1" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 110 C60 70 60 40 60 10 M60 40 C45 32 38 22 40 10 C52 16 58 26 60 40 M60 62 C75 54 82 44 80 32 C68 38 62 48 60 62 M60 84 C45 76 38 66 40 54 C52 60 58 70 60 84" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <svg class="hero__deco hero__deco--2" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 5"/></svg>
+    </div>
+  </div>
+  <div class="container">
+    <ul class="perks">
+      <li class="perk reveal"><span class="perk__icon"><svg><use href="#i-flower"/></svg></span><div><h3>Свежие цветы</h3><p>Каждый букет собирается в день заказа.</p></div></li>
+      <li class="perk reveal"><span class="perk__icon"><svg><use href="#i-truck"/></svg></span><div><h3>Доставка</h3><p>Доставляем бережно и вовремя.</p></div></li>
+      <li class="perk reveal"><span class="perk__icon"><svg><use href="#i-care"/></svg></span><div><h3>С заботой</h3><p>Каждый заказ оформляем вручную.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ КАТЕГОРИИ ============ -->
+<section class="section" id="occasions">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Повод</p>
+      <h2 class="section-title">Что вы ищете?</h2>
+    </div>
+    <div class="occasions" id="occasionsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ПОПУЛЯРНЫЕ ============ -->
+<section class="section section--tinted" id="popular">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <p class="eyebrow">Бестселлеры</p>
+        <h2 class="section-title">Любимые букеты</h2>
+        <p class="section-sub">То, что выбирают чаще всего</p>
+      </div>
+      <a href="#catalog" class="link-arrow">Весь каталог <svg><use href="#i-arrow-right"/></svg></a>
+    </div>
+    <div class="products" id="popularGrid"></div>
+  </div>
+</section>
+
+<!-- ============ КАТАЛОГ ============ -->
+<section class="section" id="catalog">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Коллекция</p>
+      <h2 class="section-title">Каталог</h2>
+      <p class="section-sub">Свежие букеты и композиции на любой повод</p>
+    </div>
+
+    <div class="filters reveal" id="filters">
+      <div class="chips" id="categoryChips" role="tablist" aria-label="Категории"></div>
+      <div class="filters__row">
+        <div class="select">
+          <label for="priceFilter" class="visually-hidden">Цена</label>
+          <select id="priceFilter"></select>
+          <svg><use href="#i-chevron"/></svg>
+        </div>
+        <div class="select">
+          <label for="sortSelect" class="visually-hidden">Сортировка</label>
+          <select id="sortSelect">
+            <option value="popular">По популярности</option>
+            <option value="price-asc">По цене: сначала дешевле</option>
+            <option value="price-desc">По цене: сначала дороже</option>
+            <option value="new">Новинки</option>
+          </select>
+          <svg><use href="#i-chevron"/></svg>
+        </div>
+        <p class="filters__count" id="catalogCount" aria-live="polite"></p>
+      </div>
+      <div class="active-filter" id="occasionFilter" hidden></div>
+    </div>
+
+    <div class="products" id="catalogGrid"></div>
+    <div class="empty-state" id="catalogEmpty" hidden>
+      <p>По выбранным фильтрам ничего не найдено</p>
+      <button class="btn btn--ghost btn--sm" type="button" id="resetFilters">Сбросить фильтры</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КОНСТРУКТОР ============ -->
+<section class="section section--tinted" id="builder">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Конструктор</p>
+      <h2 class="section-title">Создайте букет самостоятельно</h2>
+      <p class="section-sub">Выберите цветы, оттенок и упаковку — мы соберём его так, как вы задумали</p>
+    </div>
+    <div class="builder reveal">
+      <div class="builder__preview">
+        <div class="builder__art" id="builderArt"></div>
+        <p class="builder__summary" id="builderSummary"></p>
+      </div>
+      <form class="builder__form" id="builderForm" novalidate>
+        <fieldset class="bgroup">
+          <legend>Цветы</legend>
+          <div class="options" id="bFlowers"></div>
+        </fieldset>
+        <fieldset class="bgroup">
+          <legend>Цвет</legend>
+          <div class="options" id="bColors"></div>
+        </fieldset>
+        <div class="bgroup-row">
+          <fieldset class="bgroup">
+            <legend>Размер</legend>
+            <div class="options" id="bSizes"></div>
+          </fieldset>
+          <fieldset class="bgroup">
+            <legend>Упаковка</legend>
+            <div class="options" id="bWraps"></div>
+          </fieldset>
+        </div>
+        <fieldset class="bgroup">
+          <legend>Дополнительно</legend>
+          <div class="options options--extras" id="bExtras"></div>
+        </fieldset>
+        <div class="builder__total">
+          <div>
+            <span class="builder__total-label">Итоговая стоимость</span>
+            <strong class="builder__price" id="builderPrice">0 ₸</strong>
+          </div>
+          <button type="submit" class="btn btn--primary">Добавить букет в корзину</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ О НАС ============ -->
+<section class="section" id="about">
+  <div class="container about">
+    <div class="about__visual reveal">
+      <div class="about__image" id="aboutArt"></div>
+      <blockquote class="about__quote">«Каждый букет — маленькая история, которую мы рассказываем цветами»<cite>Айгерим, флорист-основатель</cite></blockquote>
+    </div>
+    <div class="about__content">
+      <p class="eyebrow reveal">О нас</p>
+      <h2 class="section-title reveal">BLOOM — это больше, чем цветы</h2>
+      <p class="about__text reveal">Мы верим, что букет способен сказать то, для чего иногда не хватает слов. Поэтому каждый заказ мы собираем вручную, внимательно относясь к сочетанию цветов, оттенков и деталей.</p>
+      <dl class="stats">
+        <div class="stat reveal"><dt><span data-count="5">5</span>+ лет</dt><dd>создаём букеты</dd></div>
+        <div class="stat reveal"><dt><span data-count="10000">10&nbsp;000</span>+</dt><dd>счастливых клиентов</dd></div>
+        <div class="stat reveal"><dt><span data-count="50">50</span>+</dt><dd>видов цветов</dd></div>
+        <div class="stat reveal"><dt><span data-count="7">7</span> дней</dt><dd>работаем для вас</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КАК ЭТО РАБОТАЕТ ============ -->
+<section class="section section--tinted" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Процесс</p>
+      <h2 class="section-title">Как это работает?</h2>
+    </div>
+    <ol class="steps">
+      <li class="step reveal"><span class="step__num">01</span><svg class="step__icon"><use href="#i-search"/></svg><h3>Выберите букет</h3><p>Найдите композицию в каталоге.</p></li>
+      <li class="step reveal"><span class="step__num">02</span><svg class="step__icon"><use href="#i-clock"/></svg><h3>Оформите заказ</h3><p>Укажите адрес и удобное время доставки.</p></li>
+      <li class="step reveal"><span class="step__num">03</span><svg class="step__icon"><use href="#i-flower"/></svg><h3>Мы соберём букет</h3><p>Флорист подготовит его непосредственно перед доставкой.</p></li>
+      <li class="step reveal"><span class="step__num">04</span><svg class="step__icon"><use href="#i-gift"/></svg><h3>Получатель получит эмоции</h3><p>Курьер бережно доставит заказ.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ ДОСТАВКА ============ -->
+<section class="section" id="delivery">
+  <div class="container delivery">
+    <div class="delivery__info">
+      <p class="eyebrow reveal">Доставка</p>
+      <h2 class="section-title reveal">Доставим туда, где вас ждут</h2>
+      <ul class="delivery__list">
+        <li class="reveal"><span class="delivery__icon"><svg><use href="#i-truck"/></svg></span><div><h3>Доставка по городу</h3><p>от 1 500 ₸</p></div></li>
+        <li class="reveal"><span class="delivery__icon"><svg><use href="#i-clock"/></svg></span><div><h3>Экспресс-доставка</h3><p>от 2 500 ₸</p></div></li>
+        <li class="reveal"><span class="delivery__icon"><svg><use href="#i-gift"/></svg></span><div><h3>Бесплатная доставка</h3><p>при заказе от 25 000 ₸</p></div></li>
+      </ul>
+    </div>
+    <form class="card-form reveal" id="deliveryForm" novalidate>
+      <h3 class="card-form__title">Данные для доставки</h3>
+      <p class="card-form__hint">Заполните заранее — мы подставим их при оформлении заказа.</p>
+      <div class="form-grid">
+        <div class="field"><label for="dDate">Дата доставки</label><input type="date" id="dDate" name="date" required></div>
+        <div class="field"><label for="dTime">Время доставки</label>
+          <div class="select select--field"><select id="dTime" name="time" required><option value="">Выберите интервал</option></select><svg><use href="#i-chevron"/></svg></div>
+        </div>
+        <div class="field field--full"><label for="dAddress">Адрес</label><input type="text" id="dAddress" name="address" placeholder="Улица, дом, квартира" required autocomplete="street-address"></div>
+        <div class="field"><label for="dName">Имя получателя</label><input type="text" id="dName" name="recipient" placeholder="Например, Алина" required></div>
+        <div class="field"><label for="dPhone">Телефон получателя</label><input type="tel" id="dPhone" name="recipientPhone" placeholder="+7 (___) ___-__-__" required data-phone></div>
+        <div class="field field--full"><label for="dComment">Комментарий курьеру</label><textarea id="dComment" name="comment" rows="3" placeholder="Код домофона, ориентиры…"></textarea></div>
+      </div>
+      <label class="check"><input type="checkbox" name="door"><span class="check__box"><svg><use href="#i-check"/></svg></span>Оставить букет у двери</label>
+      <button type="submit" class="btn btn--primary btn--block">Сохранить данные доставки</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ АНОНИМНЫЙ ПОДАРОК ============ -->
+<section class="section section--compact" id="anonymous">
+  <div class="container">
+    <div class="incognito reveal">
+      <svg class="incognito__icon"><use href="#i-mask"/></svg>
+      <div class="incognito__text">
+        <h2>Хотите остаться инкогнито?</h2>
+        <p>Мы можем доставить букет без указания имени отправителя.</p>
+      </div>
+      <button class="btn btn--light" type="button" data-open="anon">Сделать сюрприз</button>
+      <span class="incognito__status" id="anonStatus" hidden><svg><use href="#i-check"/></svg> Анонимная доставка включена</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ОТЗЫВЫ ============ -->
+<section class="section section--tinted" id="reviews">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <p class="eyebrow">Отзывы</p>
+        <h2 class="section-title">Нас выбирают за эмоции</h2>
+      </div>
+      <div class="slider-nav">
+        <button class="round-btn" type="button" id="revPrev" aria-label="Предыдущий отзыв"><svg><use href="#i-arrow-left"/></svg></button>
+        <button class="round-btn" type="button" id="revNext" aria-label="Следующий отзыв"><svg><use href="#i-arrow-right"/></svg></button>
+      </div>
+    </div>
+    <div class="reviews reveal" id="reviewsTrack" tabindex="0" aria-label="Отзывы покупателей"></div>
+    <div class="dots" id="reviewsDots"></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="container faq">
+    <div class="faq__head reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="section-title">Частые вопросы</h2>
+      <p class="section-sub">Не нашли ответ? Напишите нам в&nbsp;<a href="https://t.me/" target="_blank" rel="noopener">Telegram</a> — ответим за пару минут.</p>
+    </div>
+    <div class="accordion reveal" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="section section--compact" id="newsletter">
+  <div class="container">
+    <div class="newsletter reveal">
+      <div>
+        <h2 class="newsletter__title">Получайте вдохновение от BLOOM</h2>
+        <p>Иногда мы отправляем идеи подарков, сезонные подборки и специальные предложения.</p>
+      </div>
+      <form class="newsletter__form" id="newsletterForm" novalidate>
+        <label for="nlEmail" class="visually-hidden">Ваш email</label>
+        <input type="email" id="nlEmail" placeholder="Ваш email" required autocomplete="email">
+        <button type="submit" class="btn btn--primary">Подписаться</button>
+      </form>
+      <p class="newsletter__thanks" id="newsletterThanks" hidden>Спасибо! Вы подписались на BLOOM 💐</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КОНТАКТЫ ============ -->
+<section class="section" id="contacts">
+  <div class="container contacts">
+    <div class="contacts__info">
+      <p class="eyebrow reveal">Контакты</p>
+      <h2 class="section-title reveal">Будем рады вам</h2>
+      <ul class="contacts__list">
+        <li class="reveal"><svg><use href="#i-pin"/></svg><div><span>Адрес</span>г. Актобе, проспект Абая, 25</div></li>
+        <li class="reveal"><svg><use href="#i-phone"/></svg><div><span>Телефон</span><a href="tel:+77001234567">+7 (700) 123-45-67</a></div></li>
+        <li class="reveal"><svg><use href="#i-mail"/></svg><div><span>Email</span><a href="mailto:hello@bloom.kz">hello@bloom.kz</a></div></li>
+        <li class="reveal"><svg><use href="#i-clock"/></svg><div><span>Часы работы</span>Ежедневно: 09:00–21:00</div></li>
+      </ul>
+      <div class="socials reveal">
+        <a class="social" href="https://instagram.com/" target="_blank" rel="noopener"><svg><use href="#i-instagram"/></svg>Instagram</a>
+        <a class="social" href="https://t.me/" target="_blank" rel="noopener"><svg><use href="#i-telegram"/></svg>Telegram</a>
+        <a class="social" href="https://wa.me/77001234567" target="_blank" rel="noopener"><svg><use href="#i-whatsapp"/></svg>WhatsApp</a>
+      </div>
+    </div>
+    <div class="map reveal">
+      <div class="map__art" id="mapArt"></div>
+      <div class="map__card">
+        <strong>BLOOM</strong>
+        <span>пр. Абая, 25 · 1 этаж</span>
+        <a href="https://2gis.kz/aktobe" target="_blank" rel="noopener" class="link-arrow">Построить маршрут <svg><use href="#i-arrow-right"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href="#home" class="logo logo--light">BLOOM</a>
+      <p>Цветы, которые говорят за вас.</p>
+    </div>
+    <div class="footer__col">
+      <h3>Магазин</h3>
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О нас</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#contacts">Контакты</a>
+    </div>
+    <div class="footer__col">
+      <h3>Помощь</h3>
+      <a href="#faq">FAQ</a>
+      <button type="button" data-info="payment">Оплата</button>
+      <button type="button" data-info="returns">Возврат</button>
+      <button type="button" data-info="shipping">Условия доставки</button>
+    </div>
+    <div class="footer__col">
+      <h3>Мы в соцсетях</h3>
+      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://t.me/" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/77001234567" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© 2026 BLOOM. Все права защищены.</span>
+    <span>г. Актобе · hello@bloom.kz</span>
+  </div>
+</footer>
+
+<!-- ============ КОРЗИНА ============ -->
+<div class="overlay" data-overlay="cart"></div>
+<aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+  <div class="drawer__head">
+    <h2 id="cartTitle">Корзина <span id="cartHeadCount"></span></h2>
+    <button class="icon-btn" type="button" data-close aria-label="Закрыть корзину"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer__progress" id="freeShipping"></div>
+  <div class="drawer__body" id="cartItems"></div>
+  <div class="drawer__foot" id="cartFoot">
+    <dl class="totals">
+      <div><dt>Товары</dt><dd id="cartSubtotal">0 ₸</dd></div>
+      <div><dt>Доставка</dt><dd id="cartDelivery">0 ₸</dd></div>
+      <div class="totals__sum"><dt>Итого</dt><dd id="cartTotal">0 ₸</dd></div>
+    </dl>
+    <button class="btn btn--primary btn--block" type="button" id="checkoutBtn">Оформить заказ</button>
+  </div>
+</aside>
+
+<!-- ============ МОДАЛЬНЫЕ ОКНА ============ -->
+
+<!-- Карточка товара -->
+<div class="modal" id="product" role="dialog" aria-modal="true" aria-labelledby="pmName" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog modal__dialog--wide">
+    <button class="icon-btn modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <div class="pm">
+      <div class="pm__image" id="pmImage"></div>
+      <div class="pm__body">
+        <p class="eyebrow" id="pmCategory"></p>
+        <h2 class="pm__name" id="pmName"></h2>
+        <p class="pm__price" id="pmPrice"></p>
+        <p class="pm__desc" id="pmDesc"></p>
+        <div class="pm__block">
+          <h3>Размер</h3>
+          <div class="size-picker" id="pmSizes" role="radiogroup" aria-label="Размер букета"></div>
+          <p class="pm__muted" id="pmSizeText"></p>
+        </div>
+        <div class="pm__block">
+          <h3>Состав</h3>
+          <ul class="pm__list" id="pmComposition"></ul>
+        </div>
+        <p class="pm__stock" id="pmStock"></p>
+        <div class="pm__actions">
+          <div class="qty qty--lg">
+            <button type="button" id="pmMinus" aria-label="Уменьшить количество"><svg><use href="#i-minus"/></svg></button>
+            <span id="pmQty">1</span>
+            <button type="button" id="pmPlus" aria-label="Увеличить количество"><svg><use href="#i-plus"/></svg></button>
+          </div>
+          <button class="btn btn--primary pm__add" type="button" id="pmAdd">Добавить в корзину</button>
+          <button class="icon-btn icon-btn--outline" type="button" id="pmFav" aria-label="Добавить в избранное"><svg><use href="#i-heart"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Избранное -->
+<div class="modal" id="favorites" role="dialog" aria-modal="true" aria-labelledby="favTitle" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog">
+    <button class="icon-btn modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <h2 class="modal__title" id="favTitle">Избранное</h2>
+    <div class="fav-list" id="favList"></div>
+  </div>
+</div>
+
+<!-- Поиск -->
+<div class="modal modal--top" id="search" role="dialog" aria-modal="true" aria-label="Поиск" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="search">
+    <div class="container">
+      <div class="search__bar">
+        <svg><use href="#i-search"/></svg>
+        <input type="search" id="searchInput" placeholder="Найти букет: розы, пионы, тюльпаны…" autocomplete="off" aria-label="Поиск по товарам">
+        <button class="icon-btn" type="button" data-close aria-label="Закрыть поиск"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <div class="search__hints" id="searchHints">
+        <span>Часто ищут:</span>
+        <button type="button" data-q="розы">розы</button>
+        <button type="button" data-q="пионы">пионы</button>
+        <button type="button" data-q="тюльпаны">тюльпаны</button>
+        <button type="button" data-q="белые">белые</button>
+        <button type="button" data-q="композиция">композиция</button>
+      </div>
+      <div class="search__results" id="searchResults" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Оформление заказа -->
+<div class="modal" id="checkout" role="dialog" aria-modal="true" aria-labelledby="coTitle" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog modal__dialog--wide">
+    <button class="icon-btn modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <div class="checkout">
+      <form class="checkout__form" id="checkoutForm" novalidate>
+        <h2 class="modal__title" id="coTitle">Оформление заказа</h2>
+        <div class="form-grid">
+          <div class="field"><label for="coName">Имя</label><input id="coName" name="name" required autocomplete="name" placeholder="Ваше имя"></div>
+          <div class="field"><label for="coPhone">Телефон</label><input id="coPhone" name="phone" type="tel" required data-phone autocomplete="tel" placeholder="+7 (___) ___-__-__"></div>
+          <div class="field field--full"><label for="coEmail">Email</label><input id="coEmail" name="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+          <div class="field field--full"><label for="coAddress">Адрес доставки</label><input id="coAddress" name="address" required placeholder="Улица, дом, квартира"></div>
+          <div class="field"><label for="coDate">Дата</label><input id="coDate" name="date" type="date" required></div>
+          <div class="field"><label for="coTime">Время</label>
+            <div class="select select--field"><select id="coTime" name="time" required><option value="">Выберите интервал</option></select><svg><use href="#i-chevron"/></svg></div>
+          </div>
+          <div class="field field--full"><label for="coComment">Комментарий</label><textarea id="coComment" name="comment" rows="2" placeholder="Текст открытки, пожелания флористу…"></textarea></div>
+        </div>
+        <fieldset class="pay">
+          <legend>Способ оплаты</legend>
+          <label class="radio"><input type="radio" name="pay" value="card" checked><span class="radio__dot"></span>Банковская карта</label>
+          <label class="radio"><input type="radio" name="pay" value="kaspi"><span class="radio__dot"></span>Kaspi</label>
+          <label class="radio"><input type="radio" name="pay" value="cash"><span class="radio__dot"></span>При получении</label>
+        </fieldset>
+        <label class="check"><input type="checkbox" name="agree" required><span class="check__box"><svg><use href="#i-check"/></svg></span>Я согласен на обработку данных</label>
+        <p class="form-error" id="coError" role="alert" hidden></p>
+        <button type="submit" class="btn btn--primary btn--block">Подтвердить заказ</button>
+      </form>
+      <aside class="checkout__summary">
+        <h3>Ваш заказ</h3>
+        <div class="checkout__items" id="coItems"></div>
+        <p class="checkout__anon" id="coAnon" hidden><svg><use href="#i-mask"/></svg> Анонимная доставка</p>
+        <dl class="totals">
+          <div><dt>Товары</dt><dd id="coSubtotal"></dd></div>
+          <div><dt>Доставка</dt><dd id="coDelivery"></dd></div>
+          <div class="totals__sum"><dt>Итого</dt><dd id="coTotal"></dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- Заказ принят -->
+<div class="modal" id="success" role="dialog" aria-modal="true" aria-labelledby="okTitle" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog modal__dialog--narrow success">
+    <div class="success__flower" aria-hidden="true">🌸</div>
+    <h2 class="modal__title" id="okTitle">Заказ принят!</h2>
+    <p>Спасибо за заказ в BLOOM. Мы свяжемся с вами для подтверждения.</p>
+    <p class="success__number">Номер заказа <strong id="orderNumber">#BL-2048</strong></p>
+    <button class="btn btn--primary" type="button" data-close>Отлично</button>
+  </div>
+</div>
+
+<!-- Анонимный подарок -->
+<div class="modal" id="anon" role="dialog" aria-modal="true" aria-labelledby="anonTitle" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog modal__dialog--narrow">
+    <button class="icon-btn modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <h2 class="modal__title" id="anonTitle">Сюрприз инкогнито</h2>
+    <p class="modal__text">Выберите, как нам сохранить интригу. Настройки применятся к вашему заказу.</p>
+    <form id="anonForm" class="anon-form">
+      <label class="check"><input type="checkbox" name="noName" checked><span class="check__box"><svg><use href="#i-check"/></svg></span>Не указывать имя</label>
+      <label class="check"><input type="checkbox" name="noCall"><span class="check__box"><svg><use href="#i-check"/></svg></span>Не звонить получателю</label>
+      <label class="check"><input type="checkbox" name="anonCard"><span class="check__box"><svg><use href="#i-check"/></svg></span>Добавить анонимную открытку</label>
+      <div class="anon-form__actions">
+        <button type="submit" class="btn btn--primary">Сохранить</button>
+        <button type="button" class="btn btn--text" id="anonOff">Отключить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Информация (оплата, возврат…) -->
+<div class="modal" id="info" role="dialog" aria-modal="true" aria-labelledby="infoTitle" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog modal__dialog--narrow">
+    <button class="icon-btn modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"/></svg></button>
+    <h2 class="modal__title" id="infoTitle"></h2>
+    <div class="modal__text" id="infoText"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
